@@ -8,27 +8,41 @@ public class player : MonoBehaviour
     private float _speed = 1.0f;
     [SerializeField]
     private Rigidbody _rigidBody;
+    [SerializeField]
+    GameObject Player;
+    private int currentHP = 1;
     void Start()
     {
-
+        Player = this.gameObject;
     }
     void Update()
     {
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
         _rigidBody.velocity = new Vector2(inputX * _speed, _rigidBody.velocity.y);
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("死亡フラグ");
+            ChageDeathFlag();
+        }
+    }
+
+    void ChageDeathFlag()
+    {
+        GameManager gameManager;
+        GameObject GameManager_obj = GameObject.Find("GameManager");
+        gameManager = GameManager_obj.GetComponent<GameManager>();
+        gameManager.is_death = true;
     }
 
     void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Goal"))
-        {
-            Debug.Log("ゴール");
-        }
-
+        // 敵への当たり判定
         if(other.CompareTag("Enemy"))
         {
-            Debug.Log("敵に接触した");
+            Debug.Log("ダメージ");
+            currentHP = currentHP - 1;
         }
     }
 
