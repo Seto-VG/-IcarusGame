@@ -28,7 +28,9 @@ public class Goal : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            ChageCompleteFlag();
+            //ChageCompleteFlag();
+            Debug.Log("クリア");
+            GameManager.instance.Complete();
         }
     }
 }

@@ -25,4 +25,13 @@ public class GameManager : SingletonBehavior<GameManager>
             Destroy(player);
         }
     }
+    public void Death(){
+        is_death = true;
+        Debug.Log("死んだ");
+    }
+
+    public void Complete()
+    {
+        is_complete = true;
+    }
 }

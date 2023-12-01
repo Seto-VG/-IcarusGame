@@ -24,7 +24,8 @@ public class player : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("死亡フラグ");
-            ChageDeathFlag();
+            //ChageDeathFlag();
+            GameManager.instance.Death();
         }
     }
 
