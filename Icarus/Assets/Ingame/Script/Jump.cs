@@ -59,13 +59,19 @@ public class Jump : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //Planeについていたら地面判定にする
-        if (other.gameObject.name == "Plane" )
+        // if (other.gameObject.name == "Plane" )
+        // {
+        //     Jetpack=1.5f;
+        //     //Debug.Log("地面に衝突");
+        //    isGround = true;
+        // }
+        
+        if(other.CompareTag("Ground"))
         {
             Jetpack=1.5f;
             //Debug.Log("地面に衝突");
            isGround = true;
         }
-        
     }
 
     void OnTriggerExit(Collider other)
