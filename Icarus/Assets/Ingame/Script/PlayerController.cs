@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _speed = 1.0f;
     [SerializeField]
-    private Rigidbody _rigidBody;
+    private Rigidbody _rb;
     void Start()
     {
 
@@ -17,6 +17,6 @@ public class PlayerController : MonoBehaviour
     {
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
-        _rigidBody.velocity = new Vector2(inputX * _speed, _rigidBody.velocity.y);
+        _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
     }
 }
