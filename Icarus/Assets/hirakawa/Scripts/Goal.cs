@@ -21,7 +21,7 @@ public class Goal : MonoBehaviour
         GameManager gameManager;
         GameObject GameManager_obj = GameObject.Find("GameManager");
         gameManager = GameManager_obj.GetComponent<GameManager>();
-        gameManager.is_complete = true;
+        //gameManager._isComplete = true;
     }
 
     void OnTriggerStay(Collider other)
@@ -30,7 +30,7 @@ public class Goal : MonoBehaviour
         {
             //ChageCompleteFlag();
             Debug.Log("クリア");
-            GameManager.instance.Complete();
+            //GameManager.instance.Complete();
         }
     }
 }

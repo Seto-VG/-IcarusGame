@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private float _jetPackForce = 300.0f; // ジェットの力
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
+    private int life = 1;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        //Debug.Log(_onGround);
+        if (GameManager.instance.isDeath) { return; }
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
@@ -55,6 +56,10 @@ public class PlayerController : MonoBehaviour
             _tankCapacity -= Time.deltaTime;
             _rb.AddForce(transform.up * _jumpForce);
         }
+        if (life <= 0)
+        {
+            GameManager.instance.Death();
+        }
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
@@ -72,6 +77,15 @@ public class PlayerController : MonoBehaviour
         if (_groundSensor.CompareTag("Ground"))
         {
             _onGround = false;
+        }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        // 敵への当たり判定
+        if(other.CompareTag("Enemy"))
+        {
+            Debug.Log("ダメージ");
+            life -= 1;
         }
     }
 }

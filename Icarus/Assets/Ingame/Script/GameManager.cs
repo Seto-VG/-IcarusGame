@@ -4,34 +4,29 @@ using UnityEngine;
 
 public class GameManager : SingletonBehavior<GameManager>
 {
-    public GameObject player;
-    public bool is_complete = false;
-    public bool is_death = false;
+    public bool isComplete = false;
+    public bool isDeath = false;
     void Start()
     {
         
     }
-
     void Update()
     {
-        if(is_complete)
+        if(isDeath)
+        {
+            Debug.Log("死亡");
+        }
+        if(isComplete)
         {
             Debug.Log("ゴール");
         }
-        
-        if(is_death)
-        {
-            Debug.Log("死亡");
-            Destroy(player);
-        }
     }
     public void Death(){
-        is_death = true;
-        Debug.Log("死んだ");
+        isDeath = true;
+        //TODO 死亡アニメーション
     }
-
-    public void Complete()
+    public void OnCompleteStage()
     {
-        is_complete = true;
+        isComplete = true;
     }
 }

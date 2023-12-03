@@ -34,7 +34,7 @@ public class player : MonoBehaviour
         GameManager gameManager;
         GameObject GameManager_obj = GameObject.Find("GameManager");
         gameManager = GameManager_obj.GetComponent<GameManager>();
-        gameManager.is_death = true;
+        //gameManager._isDeath = true;
     }
 
     void OnTriggerStay(Collider other)
