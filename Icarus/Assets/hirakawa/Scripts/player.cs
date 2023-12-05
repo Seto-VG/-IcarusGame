@@ -8,9 +8,9 @@ public class player : MonoBehaviour
     private float _speed = 1.0f;
     [SerializeField]
     private Rigidbody _rigidBody;
-    [SerializeField]
     GameObject Player;
-    private int currentHP = 1;
+    private int currentHP = 5;
+    bool _isInvincible = false;
     void Start()
     {
         Player = this.gameObject;
@@ -23,18 +23,8 @@ public class player : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            Debug.Log("死亡フラグ");
-            //ChageDeathFlag();
             GameManager.instance.Death();
         }
-    }
-
-    void ChageDeathFlag()
-    {
-        GameManager gameManager;
-        GameObject GameManager_obj = GameObject.Find("GameManager");
-        gameManager = GameManager_obj.GetComponent<GameManager>();
-        //gameManager._isDeath = true;
     }
 
     void OnTriggerStay(Collider other)
@@ -42,9 +32,23 @@ public class player : MonoBehaviour
         // 敵への当たり判定
         if(other.CompareTag("Enemy"))
         {
-            Debug.Log("ダメージ");
-            currentHP = currentHP - 1;
+            if (!_isInvincible)
+            {
+                currentHP--;
+                Debug.Log("ダメージ");
+                StartCoroutine(Unbeatable()); // 無敵化
+            }
         }
+    }
+
+    private IEnumerator Unbeatable()
+    {
+        _isInvincible = true;
+
+        // 秒待って次の処理
+        yield return new WaitForSeconds(1.0f);
+
+        _isInvincible = false;
     }
 
 }

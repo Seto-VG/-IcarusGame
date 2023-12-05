@@ -16,21 +16,11 @@ public class Goal : MonoBehaviour
         
     }
 
-    void ChageCompleteFlag()
-    {
-        GameManager gameManager;
-        GameObject GameManager_obj = GameObject.Find("GameManager");
-        gameManager = GameManager_obj.GetComponent<GameManager>();
-        //gameManager._isComplete = true;
-    }
-
     void OnTriggerStay(Collider other)
     {
         if(other.name == "Player")
         {
-            //ChageCompleteFlag();
-            Debug.Log("クリア");
-            //GameManager.instance.Complete();
+            GameManager.instance.OnCompleteStage();
         }
     }
 }
