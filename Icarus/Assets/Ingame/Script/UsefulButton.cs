@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using System;
+using System.Runtime.CompilerServices;
 
 public class UsefulButton : SimpleButton
 {
@@ -39,5 +41,4 @@ public class UsefulButton : SimpleButton
     {
         rectTransform.DOScale(Vector3.one * scale, duration).SetLink(gameObject).SetEase(ease).SetUpdate(true);
     }
-
 }
