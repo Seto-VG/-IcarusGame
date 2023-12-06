@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehavior<GameManager>
 {
@@ -9,6 +11,8 @@ public class GameManager : SingletonBehavior<GameManager>
     public bool isComplete = false;
     [NonSerialized]
     public bool isDeath = false;
+    public string scene;
+	public Color loadToColor = Color.white;
     void Start()
     {
         
@@ -31,5 +35,9 @@ public class GameManager : SingletonBehavior<GameManager>
     public void OnCompleteStage()
     {
         isComplete = true;
+    }
+    public void ChgScene()
+    {
+        Initiate.Fade(scene, loadToColor, 1.0f);
     }
 }
