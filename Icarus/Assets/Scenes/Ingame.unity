@@ -413,7 +413,7 @@ MonoBehaviour:
   _jumpForce: 5
   _jetPackForce: 300
   _tankCapacity: 1.5
-  playerAnimator: {fileID: 196791803}
+  _playerAnimator: {fileID: 196791803}
 --- !u!136 &573181050
 CapsuleCollider:
   m_ObjectHideFlags: 0

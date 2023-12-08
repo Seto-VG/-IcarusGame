@@ -25,12 +25,12 @@ public class PlayerController : MonoBehaviour
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
     private int life = 1;
     [SerializeField]
-    private Animator playerAnimator;
-    private Vector3 playerSize;
+    private Animator _playerAnimator;
+    private Vector3 _playerSize;
 
     void Start()
     {
-        playerSize = transform.localScale;
+        _playerSize = transform.localScale;
     }
     void Update()
     {
@@ -42,15 +42,15 @@ public class PlayerController : MonoBehaviour
         // プレイヤーのアニメーション
         if(inputX > 0)
         {
-            transform.localScale = new Vector3(playerSize.x, playerSize.y, playerSize.z);
-            playerAnimator.SetBool("movement", true);
+            transform.localScale = new Vector3(_playerSize.x, _playerSize.y, _playerSize.z);
+            _playerAnimator.SetBool("movement", true);
         }else if(inputX < 0)
         {
-            transform.localScale = new Vector3(-playerSize.x, playerSize.y, playerSize.z);
-            playerAnimator.SetBool("movement", true);
+            transform.localScale = new Vector3(-_playerSize.x, _playerSize.y, _playerSize.z);
+            _playerAnimator.SetBool("movement", true);
         }else
         {
-            playerAnimator.SetBool("movement", false);   
+            _playerAnimator.SetBool("movement", false);   
         }
 
         // ジャンプ
@@ -83,8 +83,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        playerAnimator.SetBool("jump", _isJump);
-        playerAnimator.SetBool("ground", _onGround);
+        // ジャンプと下降のアニメーション
+        _playerAnimator.SetBool("jump", _isJump);
+        _playerAnimator.SetBool("ground", _onGround);
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
