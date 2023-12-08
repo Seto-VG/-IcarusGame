@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     private SphereCollider _groundSensor;
-    private bool _onGround;
+    private bool _onGround = true;
     private bool _isJump = false;
     [SerializeField]
     private float _jumpForce = 5.0f; // ジャンプ力
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
 
+        // プレイヤーのアニメーション
         if(inputX > 0)
         {
             transform.localScale = new Vector3(playerSize.x, playerSize.y, playerSize.z);
@@ -78,6 +79,12 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.instance.Death();
         }
+    }
+
+    void FixedUpdate()
+    {
+        playerAnimator.SetBool("jump", _isJump);
+        playerAnimator.SetBool("ground", _onGround);
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
