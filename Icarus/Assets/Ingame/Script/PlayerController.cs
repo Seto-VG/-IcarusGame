@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+//using System.Numerics;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,10 +24,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
     private int life = 1;
+    [SerializeField]
+    private Animator playerAnimator;
+    private Vector3 playerSize;
 
     void Start()
     {
-
+        playerSize = transform.localScale;
     }
     void Update()
     {
@@ -34,6 +38,20 @@ public class PlayerController : MonoBehaviour
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
+
+        if(inputX > 0)
+        {
+            transform.localScale = new Vector3(playerSize.x, playerSize.y, playerSize.z);
+            playerAnimator.SetBool("movement", true);
+        }else if(inputX < 0)
+        {
+            transform.localScale = new Vector3(-playerSize.x, playerSize.y, playerSize.z);
+            playerAnimator.SetBool("movement", true);
+        }else
+        {
+            playerAnimator.SetBool("movement", false);   
+        }
+
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && _onGround && !_isJump)
         {
