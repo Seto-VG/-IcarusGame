@@ -74,6 +74,10 @@ public class PlayerController : MonoBehaviour
             if (_isJump) { return; }
             _tankCapacity -= Time.deltaTime;
             _rb.AddForce(transform.up * _jumpForce);
+            _playerAnimator.SetBool("jetPack", true);
+        }else
+        {
+            _playerAnimator.SetBool("jetPack", false);
         }
         if (life <= 0)
         {
