@@ -275,7 +275,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _rigidBody: {fileID: 573181051}
+  _rb: {fileID: 0}
+  _groundSensor: {fileID: 0}
+  _jumpForce: 5
+  _jetPackForce: 300
+  _tankCapacity: 1.5
 --- !u!136 &573181050
 CapsuleCollider:
   m_ObjectHideFlags: 0
