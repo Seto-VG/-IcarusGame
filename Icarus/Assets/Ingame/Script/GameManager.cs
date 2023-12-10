@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,25 +13,29 @@ public class GameManager : SingletonBehavior<GameManager>
     [NonSerialized]
     public bool isDeath = false;
     public string scene;
-	public Color loadToColor = Color.white;
+    public Color loadToColor = Color.white;
     void Start()
     {
-        
+
     }
     void Update()
     {
-        if(isDeath)
+        if (isDeath)
         {
             Debug.Log("死亡");
         }
-        if(isComplete)
+        if (isComplete)
         {
             Debug.Log("ゴール");
         }
     }
-    public void Death(){
+    public void Death()
+    {
         isDeath = true;
         //TODO 死亡アニメーション
+        //TODO 死亡SE
+        Delay(2.0f);
+        //TODO 復活地点から復活
     }
     public void OnCompleteStage()
     {
@@ -39,5 +44,11 @@ public class GameManager : SingletonBehavior<GameManager>
     public void ChgScene()
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
+    }
+    async void Delay(float waitTime)
+    {
+        var token = this.GetCancellationTokenOnDestroy();
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime),
+        cancellationToken: token);
     }
 }
