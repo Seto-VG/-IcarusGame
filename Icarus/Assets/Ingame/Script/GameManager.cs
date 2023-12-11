@@ -37,7 +37,7 @@ public class GameManager : SingletonBehavior<GameManager>
         Delay(2.0f);
         //TODO 復活地点から復活
     }
-    public void OnCompleteStage()
+    public void CompleteStage()
     {
         isComplete = true;
     }
