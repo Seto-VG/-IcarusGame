@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+//using System.Numerics;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     private SphereCollider _groundSensor;
-    private bool _onGround;
+    private bool _onGround = true;
     private bool _isJump = false;
     [SerializeField]
     private float _jumpForce = 5.0f; // ジャンプ力
@@ -23,10 +24,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
     private int life = 1;
+    [SerializeField]
+    private Animator _playerAnimator;
+    private Vector3 _playerSize;
 
     void Start()
     {
-
+        _playerSize = transform.localScale;
     }
     void Update()
     {
@@ -34,6 +38,21 @@ public class PlayerController : MonoBehaviour
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
+
+        // プレイヤーのアニメーション
+        if(inputX > 0)
+        {
+            transform.localScale = new Vector3(_playerSize.x, _playerSize.y, _playerSize.z);
+            _playerAnimator.SetBool("movement", true);
+        }else if(inputX < 0)
+        {
+            transform.localScale = new Vector3(-_playerSize.x, _playerSize.y, _playerSize.z);
+            _playerAnimator.SetBool("movement", true);
+        }else
+        {
+            _playerAnimator.SetBool("movement", false);   
+        }
+
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && _onGround && !_isJump)
         {
@@ -55,11 +74,22 @@ public class PlayerController : MonoBehaviour
             if (_isJump) { return; }
             _tankCapacity -= Time.deltaTime;
             _rb.AddForce(transform.up * _jumpForce);
+            _playerAnimator.SetBool("jetPack", true);
+        }else
+        {
+            _playerAnimator.SetBool("jetPack", false);
         }
         if (life <= 0)
         {
             GameManager.instance.Death();
         }
+    }
+
+    void FixedUpdate()
+    {
+        // ジャンプと下降のアニメーション
+        _playerAnimator.SetBool("jump", _isJump);
+        _playerAnimator.SetBool("ground", _onGround);
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
