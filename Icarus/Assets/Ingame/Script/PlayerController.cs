@@ -24,11 +24,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
     [SerializeField]
+    private float _knockBackPower = 5;
+    [SerializeField]
     private SpriteRenderer _spriteRenderer;
     [SerializeField]
     private int life = 1;
     [SerializeField]
     private float _invincibleTime = 2.0f;
+    [SerializeField]
     private bool _isInvincible = false;
     [SerializeField]
     private Animator _playerAnimator;
@@ -136,13 +139,13 @@ public class PlayerController : MonoBehaviour
         // 敵への当たり判定
         if(other.CompareTag("Enemy") && !_isInvincible)
         {
-            _playerAnimator.SetBool("damage", true);
             Debug.Log("ダメージ");
             life -= 1;
-            // if (life != 0)
-            // {
-            //     _playerAnimator.SetBool("damage", true);
-            // }
+            if (life > 0)
+            {
+                _rb.AddForce(-transform.right * _knockBackPower, ForceMode.VelocityChange);
+                _playerAnimator.SetBool("damage", true);
+            }
             StartCoroutine(Unbeatable()); // 無敵化
         }else{
             _playerAnimator.SetBool("damage", false);
