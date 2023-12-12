@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
     [SerializeField]
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
     private int life = 1;
     [SerializeField]
     private float _invincibleTime = 2.0f;
@@ -83,9 +85,24 @@ public class PlayerController : MonoBehaviour
         {
             _playerAnimator.SetBool("jetPack", false);
         }
+        // 死亡した時の処理
         if (life <= 0)
         {
             GameManager.instance.Death();
+            Material[] materials = _spriteRenderer.materials;
+            foreach (Material material in materials)
+            {
+                Color32 color = material.color;
+                Color32 aColor = color;
+                aColor.a = 0;
+                Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+                seq.SetLoops(-1);
+                seq.Play();
+            }
         }
     }
 
@@ -118,12 +135,13 @@ public class PlayerController : MonoBehaviour
         // 敵への当たり判定
         if(other.CompareTag("Enemy") && !_isInvincible)
         {
+            _playerAnimator.SetBool("damage", true);
             Debug.Log("ダメージ");
             life -= 1;
-            if (life != 0)
-            {
-                _playerAnimator.SetBool("damage", true);
-            }
+            // if (life != 0)
+            // {
+            //     _playerAnimator.SetBool("damage", true);
+            // }
             StartCoroutine(Unbeatable()); // 無敵化
         }else{
             _playerAnimator.SetBool("damage", false);
@@ -132,6 +150,25 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Unbeatable()
     {
+        if(life > 0)
+        {
+            Material[] materials = _spriteRenderer.materials;
+            foreach (Material material in materials)
+            {
+                Color32 color = material.color;
+                Color32 aColor = color;
+                aColor.a = 0;
+                Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.2f));
+                //seq.AppendCallback(() => seq.Kill());
+                seq.SetLoops(3);
+                seq.Play();
+            }
+        }
+
         _isInvincible = true;
 
         // 秒待って次の処理

@@ -1542,8 +1542,9 @@ MonoBehaviour:
   _jumpForce: 5
   _jetPackForce: 300
   _tankCapacity: 1.5
+  _spriteRenderer: {fileID: 1246385046461219347}
   life: 5
-  _invincibleTime: 2
+  _invincibleTime: 1.5
   _playerAnimator: {fileID: 8490613922231483254}
 --- !u!1 &5289176155179723849
 GameObject:
