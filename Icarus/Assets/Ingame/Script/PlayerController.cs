@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         // 死亡した時の処理
         if (life <= 0)
         {
+            _playerAnimator.SetBool("death", true);
             GameManager.instance.Death();
             Material[] materials = _spriteRenderer.materials;
             foreach (Material material in materials)
