@@ -23,7 +23,11 @@ public class PlayerController : MonoBehaviour
     private float _jetPackForce = 300.0f; // ジェットの力
     [SerializeField]
     private float _tankCapacity = 1.5f; // ジェットのタンク容量
+    [SerializeField]
     private int life = 1;
+    [SerializeField]
+    private float _invincibleTime = 2.0f;
+    private bool _isInvincible = false;
     [SerializeField]
     private Animator _playerAnimator;
     private Vector3 _playerSize;
@@ -114,8 +118,22 @@ public class PlayerController : MonoBehaviour
         // 敵への当たり判定
         if(other.CompareTag("Enemy"))
         {
-            Debug.Log("ダメージ");
-            life -= 1;
+            if (!_isInvincible)
+            {
+                Debug.Log("ダメージ");
+                life -= 1;
+                StartCoroutine(Unbeatable()); // 無敵化
+            }
         }
+    }
+
+    private IEnumerator Unbeatable()
+    {
+        _isInvincible = true;
+
+        // 秒待って次の処理
+        yield return new WaitForSeconds(_invincibleTime);
+
+        _isInvincible = false;
     }
 }
