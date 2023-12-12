@@ -116,14 +116,17 @@ public class PlayerController : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         // 敵への当たり判定
-        if(other.CompareTag("Enemy"))
+        if(other.CompareTag("Enemy") && !_isInvincible)
         {
-            if (!_isInvincible)
+            Debug.Log("ダメージ");
+            life -= 1;
+            if (life != 0)
             {
-                Debug.Log("ダメージ");
-                life -= 1;
-                StartCoroutine(Unbeatable()); // 無敵化
+                _playerAnimator.SetBool("damage", true);
             }
+            StartCoroutine(Unbeatable()); // 無敵化
+        }else{
+            _playerAnimator.SetBool("damage", false);
         }
     }
 
