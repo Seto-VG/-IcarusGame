@@ -143,8 +143,8 @@ public class PlayerController : MonoBehaviour
             life -= 1;
             if (life > 0)
             {
-                _rb.AddForce(-transform.right * _knockBackPower, ForceMode.VelocityChange);
                 _playerAnimator.SetBool("damage", true);
+                _rb.AddForce(-transform.right * _knockBackPower, ForceMode.VelocityChange);
             }
             StartCoroutine(Unbeatable()); // 無敵化
         }else{
