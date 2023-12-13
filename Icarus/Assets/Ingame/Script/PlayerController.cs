@@ -150,6 +150,11 @@ public class PlayerController : MonoBehaviour
         }else{
             _playerAnimator.SetBool("damage", false);
         }
+        // ゴールへの当たり判定
+        if(other.CompareTag("Goal"))
+        {
+            GameManager.instance.CompleteStage();
+        }
     }
 
     private IEnumerator Unbeatable()
