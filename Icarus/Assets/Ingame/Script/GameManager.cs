@@ -33,9 +33,14 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         isDeath = true;
         //TODO 死亡アニメーション
+        PlayerController.instance.DeathAnimation();
         //TODO 死亡SE
         Delay(2.0f);
         //TODO 復活地点から復活
+    }
+    public void Respawn()
+    {
+        isDeath = false;
     }
     public void CompleteStage()
     {

@@ -629,7 +629,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2416719745063247026, guid: 894c5c9c102044e43ba001c4df723697, type: 3}
+  - {fileID: 2100000, guid: 7f98fe8a1688041498ce5307fc004265, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1707,7 +1707,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1294058508819152814, guid: 894c5c9c102044e43ba001c4df723697, type: 3}
+  - {fileID: 2100000, guid: 7f98fe8a1688041498ce5307fc004265, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2896,7 +2896,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7573661587976805087, guid: 894c5c9c102044e43ba001c4df723697, type: 3}
+  - {fileID: 2100000, guid: 7f98fe8a1688041498ce5307fc004265, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4339,6 +4339,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1305118973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1305118974}
+  m_Layer: 0
+  m_Name: respawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1305118974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305118973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.5, y: 6.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1315702819
 GameObject:
   m_ObjectHideFlags: 0
@@ -7969,12 +8000,14 @@ MonoBehaviour:
   _jumpForce: 5
   _jetPackForce: 300
   _tankCapacity: 1.5
-  _knockBackPower: 5
+  _knockBackPower: 100
   _spriteRenderer: {fileID: 1246385046461219347}
   _maxHP: 5
   _hpSlider: {fileID: 507337619}
+  _respawnPos: {fileID: 1305118973}
   _invincibleTime: 1.5
   _isInvincible: 0
+  _isRespawn: 1
   _playerAnimator: {fileID: 8490613922231483254}
 --- !u!1 &5289176155179723849
 GameObject:
@@ -8907,3 +8940,4 @@ SceneRoots:
   - {fileID: 1804539068}
   - {fileID: 102713831}
   - {fileID: 749615621}
+  - {fileID: 1305118974}

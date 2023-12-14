@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 //using System.Numerics;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : SingletonBehavior<PlayerController>
 {
     [SerializeField]
     private float _speed = 1.0f;
@@ -34,9 +34,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Slider _hpSlider;
     [SerializeField]
+    private GameObject _respawnPos;
+    [SerializeField]
     private float _invincibleTime = 2.0f;
     [SerializeField]
     private bool _isInvincible = false;
+    [SerializeField]
+    private bool _isRespawn;
     [SerializeField]
     private Animator _playerAnimator;
     private Vector3 _playerSize;
@@ -97,23 +101,9 @@ public class PlayerController : MonoBehaviour
         // 死亡した時の処理
         if (life <= 0)
         {
-            _playerAnimator.SetBool("death", true);
-            GameManager.instance.Death();
-            Material[] materials = _spriteRenderer.materials;
-            foreach (Material material in materials)
-            {
-                Color32 color = material.color;
-                Color32 aColor = color;
-                aColor.a = 0;
-                Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
-                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
-                seq.SetLoops(-1);
-                seq.Play();
-            }
             _rb.velocity = Vector3.zero;
+            _playerAnimator.SetBool("death", true);
+            GameManager.instance.Death();              
         }
         _hpSlider.value = (float)life / (float)_maxHP;
     }
@@ -123,6 +113,14 @@ public class PlayerController : MonoBehaviour
         // ジャンプと下降のアニメーション
         _playerAnimator.SetBool("jump", _isJump);
         _playerAnimator.SetBool("ground", _onGround);
+    }
+    public void InitPlayerState()
+    {
+        GameManager.instance.Respawn();
+        transform.position = _respawnPos.transform.position;
+        _playerAnimator.SetBool("death", false);
+        _playerAnimator.SetBool("movement", false);
+        life = _maxHP;
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
@@ -152,7 +150,7 @@ public class PlayerController : MonoBehaviour
             if (life > 0)
             {
                 _playerAnimator.SetBool("damage", true);
-                _rb.AddForce(new Vector3(-1, 1, 0) * _knockBackPower, ForceMode.Impulse);
+                _rb.AddForce(-transform.right * _knockBackPower, ForceMode.Impulse);
             }
             StartCoroutine(Unbeatable()); // 無敵化
         }else{
@@ -180,7 +178,6 @@ public class PlayerController : MonoBehaviour
                 seq.Append(material.DOColor(endValue: color, duration: 0.1f));
                 seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
                 seq.Append(material.DOColor(endValue: color, duration: 0.2f));
-                //seq.AppendCallback(() => seq.Kill());
                 seq.SetLoops(3);
                 seq.Play();
             }
@@ -192,5 +189,27 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(_invincibleTime);
 
         _isInvincible = false;
+    }
+
+    public void DeathAnimation()
+    {
+        Material[] materials = _spriteRenderer.materials;
+            foreach (Material material in materials)
+            {
+                Color32 color = material.color;
+                Color32 aColor = color;
+                aColor.a = 0;
+                Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+                seq.SetLoops(10);
+                seq.OnComplete(() =>
+                {
+                    InitPlayerState();
+                });
+                seq.Play();
+            }
     }
 }
