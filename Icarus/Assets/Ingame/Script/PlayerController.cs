@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 //using System.Numerics;
 
 public class PlayerController : MonoBehaviour
@@ -27,8 +28,11 @@ public class PlayerController : MonoBehaviour
     private float _knockBackPower = 5;
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
+    private int life;
     [SerializeField]
-    private int life = 1;
+    private int _maxHP = 5;
+    [SerializeField]
+    private Slider _hpSlider;
     [SerializeField]
     private float _invincibleTime = 2.0f;
     [SerializeField]
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _playerSize = transform.localScale;
+        _hpSlider.value = 1;
+        life = _maxHP;
     }
     void Update()
     {
@@ -109,6 +115,7 @@ public class PlayerController : MonoBehaviour
             }
             _rb.velocity = Vector3.zero;
         }
+        _hpSlider.value = (float)life / (float)_maxHP;
     }
 
     void FixedUpdate()
@@ -145,7 +152,7 @@ public class PlayerController : MonoBehaviour
             if (life > 0)
             {
                 _playerAnimator.SetBool("damage", true);
-                _rb.AddForce(-transform.right * _knockBackPower, ForceMode.VelocityChange);
+                _rb.AddForce(new Vector3(-1, 1, 0) * _knockBackPower, ForceMode.Impulse);
             }
             StartCoroutine(Unbeatable()); // 無敵化
         }else{
