@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 seq.SetLoops(-1);
                 seq.Play();
             }
+            _rb.velocity = Vector3.zero;
         }
     }
 
