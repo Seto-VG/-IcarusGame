@@ -31,10 +31,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Animator _playerAnimator;
     private Vector3 _playerSize;
+    public AudioClip seClip;
 
     void Start()
     {
         _playerSize = transform.localScale;
+        AudioManager.Instance.AddSEClip("jump", seClip);
     }
     void Update()
     {
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour
         {
             _isJump = true;
             _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+            AudioManager.Instance.PlaySE("jump");
         }
         if (_isJump)
         {
