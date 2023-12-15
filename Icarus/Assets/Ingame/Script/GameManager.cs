@@ -27,6 +27,7 @@ public class GameManager : SingletonBehavior<GameManager>
         if (isComplete)
         {
             Debug.Log("ゴール");
+            ChgScene();
         }
     }
     public void Death()

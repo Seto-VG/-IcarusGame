@@ -128,9 +128,8 @@ public class PlayerController : SingletonBehavior<PlayerController>
         {
             _rb.velocity = Vector3.zero;
             _playerAnimator.SetBool("death", true);
-            _visible = true;
             GameManager.instance.Death();
-            
+            _visible = true;
         }
     }
     public void InitPlayerState()
