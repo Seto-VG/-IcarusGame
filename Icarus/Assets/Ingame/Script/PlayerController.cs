@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
+using Cinemachine;
 //using System.Numerics;
 
 public class PlayerController : SingletonBehavior<PlayerController>
@@ -40,10 +41,13 @@ public class PlayerController : SingletonBehavior<PlayerController>
     [SerializeField]
     private bool _isInvincible = false;
     [SerializeField]
-    private bool _isRespawn;
-    [SerializeField]
     private Animator _playerAnimator;
     private Vector3 _playerSize;
+    [SerializeField]
+    private Transform playerTransform;
+    [SerializeField]
+    private CinemachineConfiner confiner;
+    private bool _visible = false;
 
     void Start()
     {
@@ -106,6 +110,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
             GameManager.instance.Death();              
         }
         _hpSlider.value = (float)life / (float)_maxHP;
+        PlayerVisibleCheck();
     }
 
     void FixedUpdate()
@@ -114,6 +119,20 @@ public class PlayerController : SingletonBehavior<PlayerController>
         _playerAnimator.SetBool("jump", _isJump);
         _playerAnimator.SetBool("ground", _onGround);
     }
+    private void PlayerVisibleCheck()
+    {
+        Vector3 playerPosition = playerTransform.position;
+
+        // プレイヤーがカメラの動く範囲内からでたときの処理
+        if (confiner.m_BoundingVolume != null && !confiner.m_BoundingVolume.bounds.Contains(playerPosition) && !_visible)
+        {
+            _rb.velocity = Vector3.zero;
+            _playerAnimator.SetBool("death", true);
+            _visible = true;
+            GameManager.instance.Death();
+            
+        }
+    }
     public void InitPlayerState()
     {
         GameManager.instance.Respawn();
@@ -121,6 +140,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
         _playerAnimator.SetBool("death", false);
         _playerAnimator.SetBool("movement", false);
         life = _maxHP;
+        _visible = false;
     }
     void OnTriggerEnter(Collider _groundSensor)
     {
