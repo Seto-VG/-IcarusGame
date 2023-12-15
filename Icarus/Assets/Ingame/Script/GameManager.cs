@@ -52,6 +52,14 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
     }
+    public void IndicationGuid()
+    {
+        UiControl.instance.GuidDisplay();
+    }
+    public void HideGuid()
+    {
+        UiControl.instance.GuidHidden();
+    }
     async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();
