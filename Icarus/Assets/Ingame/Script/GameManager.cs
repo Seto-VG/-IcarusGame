@@ -45,6 +45,7 @@ public class GameManager : SingletonBehavior<GameManager>
     public void CompleteStage()
     {
         isComplete = true;
+        PlayerController.instance.Complete();
     }
     public void ChgScene()
     {

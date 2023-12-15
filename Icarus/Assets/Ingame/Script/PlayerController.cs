@@ -212,4 +212,10 @@ public class PlayerController : SingletonBehavior<PlayerController>
                 seq.Play();
             }
     }
+
+    public void Complete()
+    {
+        _rb.velocity = Vector3.zero;
+        _rb.isKinematic = true;
+    }
 }
