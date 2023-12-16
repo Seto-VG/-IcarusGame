@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,15 +16,18 @@ public class GameManager : SingletonBehavior<GameManager>
     [SerializeField]
     private string scene;
     [SerializeField]
-    private Color loadToColor = Color.white;
+    public Color loadToColor = Color.white;
     [NonSerialized]
     public bool isGameStop = false;
+    private GameObject pauseImage; // TODO ポーズ中表示されるオブジェクト　子に閉じる用ボタンもつける
+    private GameObject tempImage;
+    private bool isImageActive = false;
     [Tooltip("表示したいキャンバス")]
     [SerializeField]
     private GameObject _canvas;
     void Start()
     {
-
+        pauseImage.SetActive(false);
     }
     void Update()
     {
@@ -40,15 +44,53 @@ public class GameManager : SingletonBehavior<GameManager>
     public void Death()
     {
         isDeath = true;
-        //TODO 死亡アニメーション
         PlayerController.instance.DeathAnimation();
         //TODO 死亡SE
         Delay(2.0f);
-        //TODO 復活地点から復活
     }
     public void Respawn()
     {
         isDeath = false;
+    }
+    public void OnOffSwitchPause() // ポーズ機能の制御
+    {
+        if (!isGameStop)
+        {
+            isGameStop = true;
+            Time.timeScale = 0; // 時間停止
+            // TODO ポップアップアクティブ化
+        }
+        else
+        {
+            isGameStop = false;
+            Time.timeScale = 1; // 再開
+            // TODO ポップアップ非アクティブ化
+        }
+    }
+    public void OnOffSwitchInstructions() // ゲーム説明のポップアップ制御
+    {
+        if (!isImageActive)
+        {
+            isImageActive = true;
+            // TODO ポップアップアクティブ化
+        }
+        else
+        {
+            isImageActive = false;
+            // TODO ポップアップ非アクティブ化
+        }
+    }
+    public void ReturnToTitle()
+    {
+        Initiate.Fade("Title", loadToColor, 1.0f);
+    }
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
     public void CompleteStage()
     {
@@ -67,15 +109,6 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         _canvas.SetActive(false);
     }
-    public void ExitGame()
-    {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
-        #else
-            Application.Quit();//ゲームプレイ終了
-        #endif
-    }
-    public
     async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();

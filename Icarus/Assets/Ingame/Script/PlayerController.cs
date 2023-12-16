@@ -57,7 +57,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
     }
     void Update()
     {
-        if (GameManager.instance.isDeath) { return; }
+        if (GameManager.instance.isDeath || GameManager.instance.isGameStop) { return; }
         // 左右移動
         float inputX = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
