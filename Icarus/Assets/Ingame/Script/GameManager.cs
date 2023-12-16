@@ -48,7 +48,7 @@ public class GameManager : SingletonBehavior<GameManager>
         //TODO 死亡SE
         Delay(2.0f);
     }
-    public void Respawn()
+    public void Respawn() // TODO あとから消す
     {
         isDeath = false;
     }
@@ -58,13 +58,13 @@ public class GameManager : SingletonBehavior<GameManager>
         {
             isGameStop = true;
             Time.timeScale = 0; // 時間停止
-            // TODO ポップアップアクティブ化
+            _canvas.SetActive(true);
         }
         else
         {
             isGameStop = false;
             Time.timeScale = 1; // 再開
-            // TODO ポップアップ非アクティブ化
+            _canvas.SetActive(false);
         }
     }
     public void OnOffSwitchInstructions() // ゲーム説明のポップアップ制御
@@ -72,12 +72,12 @@ public class GameManager : SingletonBehavior<GameManager>
         if (!isImageActive)
         {
             isImageActive = true;
-            // TODO ポップアップアクティブ化
+            _canvas.SetActive(true);
         }
         else
         {
             isImageActive = false;
-            // TODO ポップアップ非アクティブ化
+            _canvas.SetActive(false);
         }
     }
     public void ReturnToTitle()
@@ -101,15 +101,7 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
     }
-    public void IndicationCanvas()
-    {
-        _canvas.SetActive(true);
-    }
-    public void HideCanvas()
-    {
-        _canvas.SetActive(false);
-    }
-    async void Delay(float waitTime)
+    public async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime),
