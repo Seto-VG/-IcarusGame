@@ -1568,6 +1568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene: Stage2
   loadToColor: {r: 1, g: 1, b: 1, a: 1}
+  _canvas: {fileID: 0}
 --- !u!4 &1156117087
 Transform:
   m_ObjectHideFlags: 0
@@ -1682,6 +1683,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
+      propertyPath: confiner
+      value: 
+      objectReference: {fileID: 1380367243}
+    - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
       propertyPath: _hpSlider
       value: 
       objectReference: {fileID: 626877152}
@@ -1693,6 +1698,10 @@ PrefabInstance:
       propertyPath: _spriteRenderer
       value: 
       objectReference: {fileID: 88032635}
+    - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1643706760}
     - target: {fileID: 6857776646720662875, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
