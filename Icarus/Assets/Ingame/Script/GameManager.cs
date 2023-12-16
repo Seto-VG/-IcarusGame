@@ -60,6 +60,14 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         UiControl.instance.GuidHidden();
     }
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+        #else
+            Application.Quit();//ゲームプレイ終了
+        #endif
+    }
     async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();

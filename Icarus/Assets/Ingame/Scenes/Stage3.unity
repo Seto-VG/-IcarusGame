@@ -4975,7 +4975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023107233}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21640667, y: -0.6731777, z: 0.2164067, w: 0.6731776}
+  m_LocalRotation: {x: 0.2164067, y: -0.67317766, z: 0.21640666, w: 0.67317766}
   m_LocalPosition: {x: 3, y: 2.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8620,8 +8620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18bb30e707f0497408c039c94d4b35ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 3822614220267182583}
-  confiner: {fileID: 2137778642}
 --- !u!1 &1641456734
 GameObject:
   m_ObjectHideFlags: 0
@@ -9635,7 +9633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45480d80faffebb42ba0f816cef3e2dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 
+  scene: Result
   loadToColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1825701973
 GameObject:
