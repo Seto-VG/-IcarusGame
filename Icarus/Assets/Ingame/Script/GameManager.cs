@@ -12,8 +12,15 @@ public class GameManager : SingletonBehavior<GameManager>
     public bool isComplete = false;
     [NonSerialized]
     public bool isDeath = false;
-    public string scene;
-    public Color loadToColor = Color.white;
+    [SerializeField]
+    private string scene;
+    [SerializeField]
+    private Color loadToColor = Color.white;
+    [NonSerialized]
+    public bool isGameStop = false;
+    [Tooltip("表示したいキャンバス")]
+    [SerializeField]
+    private GameObject _canvas;
     void Start()
     {
 
@@ -54,11 +61,11 @@ public class GameManager : SingletonBehavior<GameManager>
     }
     public void IndicationCanvas()
     {
-        UiControl.instance.CanvasDisplay();
+        _canvas.SetActive(true);
     }
     public void HideCanvas()
     {
-        UiControl.instance.CanvasHidden();
+        _canvas.SetActive(false);
     }
     public void ExitGame()
     {
@@ -68,6 +75,7 @@ public class GameManager : SingletonBehavior<GameManager>
             Application.Quit();//ゲームプレイ終了
         #endif
     }
+    public
     async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();
