@@ -27,7 +27,7 @@ public class GameManager : SingletonBehavior<GameManager>
     private GameObject _canvas;
     void Start()
     {
-        pauseImage.SetActive(false);
+        //pauseImage.SetActive(false);
     }
     void Update()
     {
@@ -40,6 +40,7 @@ public class GameManager : SingletonBehavior<GameManager>
             Debug.Log("ゴール");
             ChgScene();
         }
+        Debug.Log("やー");
     }
     public void Death()
     {
@@ -82,6 +83,8 @@ public class GameManager : SingletonBehavior<GameManager>
     }
     public void ReturnToTitle()
     {
+        isGameStop = false;
+        Time.timeScale = 1; // 再開
         Initiate.Fade("Title", loadToColor, 1.0f);
     }
     public void ExitGame()

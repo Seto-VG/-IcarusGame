@@ -396,8 +396,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278247631
-  m_fontColor: {r: 0.81039137, g: 0.8792453, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -828,15 +828,15 @@ MonoBehaviour:
   isInteractable: 1
   buttonColorSettings:
     normalColor:
-      color: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 0.88683164, b: 0, a: 1}
       duration: 0
       ease: 1
     disabledColor:
-      color: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 0, b: 0, a: 1}
       duration: 0
       ease: 1
     onPointerEnterColor:
-      color: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 0, b: 0, a: 1}
       duration: 0
       ease: 1
     onPointerDownColor:
@@ -1292,7 +1292,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1188088667}
           m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: IndicationCanvas
+          m_MethodName: OnOffSwitchInstructions
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1587,7 +1587,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1188088667}
           m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: HideCanvas
+          m_MethodName: OnOffSwitchInstructions
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1712,8 +1712,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278247631
-  m_fontColor: {r: 0.81039137, g: 0.8792453, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2108,8 +2108,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278247631
-  m_fontColor: {r: 0.81039137, g: 0.8792453, b: 0, a: 1}
+    rgba: 4294704123
+  m_fontColor: {r: 0.98490566, g: 0.98490566, b: 0.98490566, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
