@@ -48,12 +48,19 @@ public class PlayerController : SingletonBehavior<PlayerController>
     [SerializeField]
     private CinemachineConfiner confiner;
     private bool _visible = false;
+    public AudioClip jumpSeClip;
+    public AudioClip jetPackSeClip;
+    public AudioClip bgmClip;
 
     void Start()
     {
         _playerSize = transform.localScale;
         _hpSlider.value = 1;
         life = _maxHP;
+        //TODO オーディオマネージャーの設定
+        // AudioManager.Instance.AddSEClip("JumpSe", jumpSeClip);
+        // AudioManager.Instance.AddSEClip("JetPackSe", jetPackSeClip);
+        // AudioManager.Instance.PlayBGM(bgmClip);
     }
     void Update()
     {
@@ -63,22 +70,25 @@ public class PlayerController : SingletonBehavior<PlayerController>
         _rb.velocity = new Vector2(inputX * _speed, _rb.velocity.y);
 
         // プレイヤーのアニメーション
-        if(inputX > 0)
+        if (inputX > 0)
         {
             transform.localScale = new Vector3(_playerSize.x, _playerSize.y, _playerSize.z);
             _playerAnimator.SetBool("movement", true);
-        }else if(inputX < 0)
+        }
+        else if (inputX < 0)
         {
             transform.localScale = new Vector3(-_playerSize.x, _playerSize.y, _playerSize.z);
             _playerAnimator.SetBool("movement", true);
-        }else
+        }
+        else
         {
-            _playerAnimator.SetBool("movement", false);   
+            _playerAnimator.SetBool("movement", false);
         }
 
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && _onGround && !_isJump)
         {
+            //AudioManager.Instance.PlaySE("JumpSe");
             _isJump = true;
             _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
         }
@@ -95,10 +105,12 @@ public class PlayerController : SingletonBehavior<PlayerController>
         if (Input.GetKey(KeyCode.Space) && !_onGround && _tankCapacity > 0)
         {
             if (_isJump) { return; }
+            //AudioManager.Instance.PlaySE("JetPackSe");
             _tankCapacity -= Time.deltaTime;
             _rb.AddForce(transform.up * _jumpForce);
             _playerAnimator.SetBool("jetPack", true);
-        }else
+        }
+        else
         {
             _playerAnimator.SetBool("jetPack", false);
         }
@@ -107,7 +119,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
         {
             _rb.velocity = Vector3.zero;
             _playerAnimator.SetBool("death", true);
-            GameManager.instance.Death();              
+            GameManager.instance.Death();
         }
         _hpSlider.value = (float)life / (float)_maxHP;
         PlayerVisibleCheck();
@@ -134,7 +146,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
     }
     public void InitPlayerState()
     {
-        GameManager.instance.Respawn();
+        GameManager.instance.isDeath = false;
         transform.position = _respawnPos.transform.position;
         _playerAnimator.SetBool("death", false);
         _playerAnimator.SetBool("movement", false);
@@ -162,7 +174,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
     void OnTriggerStay(Collider other)
     {
         // 敵への当たり判定
-        if(other.CompareTag("Enemy") && !_isInvincible)
+        if (other.CompareTag("Enemy") && !_isInvincible)
         {
             Debug.Log("ダメージ");
             life -= 1;
@@ -172,19 +184,21 @@ public class PlayerController : SingletonBehavior<PlayerController>
                 _rb.AddForce(-transform.right * _knockBackPower, ForceMode.Impulse);
             }
             StartCoroutine(Unbeatable()); // 無敵化
-        }else{
+        }
+        else
+        {
             _playerAnimator.SetBool("damage", false);
         }
         // ゴールへの当たり判定
-        if(other.CompareTag("Goal"))
+        if (other.CompareTag("Goal"))
         {
             GameManager.instance.CompleteStage();
         }
     }
-
+    // 無敵処理
     private IEnumerator Unbeatable()
     {
-        if(life > 0)
+        if (life > 0)
         {
             Material[] materials = _spriteRenderer.materials;
             foreach (Material material in materials)
@@ -209,29 +223,29 @@ public class PlayerController : SingletonBehavior<PlayerController>
 
         _isInvincible = false;
     }
-
+    //死亡アニメーション
     public void DeathAnimation()
     {
         Material[] materials = _spriteRenderer.materials;
-            foreach (Material material in materials)
+        foreach (Material material in materials)
+        {
+            Color32 color = material.color;
+            Color32 aColor = color;
+            aColor.a = 0;
+            Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
+            seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+            seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+            seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
+            seq.Append(material.DOColor(endValue: color, duration: 0.1f));
+            seq.SetLoops(10);
+            seq.OnComplete(() =>
             {
-                Color32 color = material.color;
-                Color32 aColor = color;
-                aColor.a = 0;
-                Sequence seq = DOTween.Sequence().SetAutoKill(false).Pause();
-                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: aColor, duration: 0.1f));
-                seq.Append(material.DOColor(endValue: color, duration: 0.1f));
-                seq.SetLoops(10);
-                seq.OnComplete(() =>
-                {
-                    InitPlayerState();
-                });
-                seq.Play();
-            }
+                InitPlayerState();
+            });
+            seq.Play();
+        }
     }
-
+    // プレイヤーの位置固定
     public void Complete()
     {
         _rb.velocity = Vector3.zero;

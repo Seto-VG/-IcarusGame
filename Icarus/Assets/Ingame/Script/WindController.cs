@@ -21,11 +21,13 @@ public class WindController : MonoBehaviour
     float _time;
     private double _elapsedTime = 0.0d;
     private bool _isEnableBlow = true;
+    public AudioClip windSeClip;
     void Start()
     {
         _force = new Vector3(_forceX, _forceY, 0) * windForce;
         // _force = new Vector3(0, -(gra - scale), 0);
         // _time = switchTime;
+        AudioManager.Instance.AddSEClip("WindSe", windSeClip);
     }
     void Update()
     {
@@ -47,6 +49,7 @@ public class WindController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.attachedRigidbody.AddForce(_force, ForceMode.Impulse);
+            AudioManager.Instance.PlaySE("WindSe");
         }
     }
 }
