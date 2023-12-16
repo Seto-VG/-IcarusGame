@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class UiControl : SingletonBehavior<UiControl>
 {
+    [Tooltip("表示したいキャンバス")]
     [SerializeField]
-    private GameObject _guidCanvas;
+    private GameObject _canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +21,13 @@ public class UiControl : SingletonBehavior<UiControl>
         
     }
 
-    public void GuidDisplay()
+    public void CanvasDisplay()
     {
-        _guidCanvas.SetActive(true);
+        _canvas.SetActive(true);
     }
 
-    public void GuidHidden()
+    public void CanvasHidden()
     {
-        _guidCanvas.SetActive(false);
+        _canvas.SetActive(false);
     }
 }

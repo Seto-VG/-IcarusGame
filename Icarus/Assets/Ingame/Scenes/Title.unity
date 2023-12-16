@@ -1292,7 +1292,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1188088667}
           m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: IndicationGuid
+          m_MethodName: IndicationCanvas
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1586,7 +1586,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1188088667}
           m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: HideGuid
+          m_MethodName: HideCanvas
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e82468fa1957c48a7583141ef56ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guidCanvas: {fileID: 806659754}
+  _canvas: {fileID: 806659754}
 --- !u!4 &1875399342
 Transform:
   m_ObjectHideFlags: 0

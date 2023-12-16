@@ -52,13 +52,13 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
     }
-    public void IndicationGuid()
+    public void IndicationCanvas()
     {
-        UiControl.instance.GuidDisplay();
+        UiControl.instance.CanvasDisplay();
     }
-    public void HideGuid()
+    public void HideCanvas()
     {
-        UiControl.instance.GuidHidden();
+        UiControl.instance.CanvasHidden();
     }
     public void ExitGame()
     {
