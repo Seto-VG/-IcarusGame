@@ -19,12 +19,11 @@ public class GameManager : SingletonBehavior<GameManager>
     public Color loadToColor = Color.white;
     [NonSerialized]
     public bool isGameStop = false;
-    private GameObject pauseImage; // TODO ポーズ中表示されるオブジェクト　子に閉じる用ボタンもつける
+    [SerializeField]
+    private GameObject pauseImage;
+    [SerializeField]
     private GameObject tempImage;
     private bool isImageActive = false;
-    [Tooltip("表示したいキャンバス")]
-    [SerializeField]
-    private GameObject _canvas;
     void Start()
     {
         //pauseImage.SetActive(false);
@@ -40,7 +39,6 @@ public class GameManager : SingletonBehavior<GameManager>
             Debug.Log("ゴール");
             ChgScene();
         }
-        Debug.Log("やー");
     }
     public void Death()
     {
@@ -55,30 +53,36 @@ public class GameManager : SingletonBehavior<GameManager>
     }
     public void OnOffSwitchPause() // ポーズ機能の制御
     {
-        if (!isGameStop)
+        if (pauseImage != null)
         {
-            isGameStop = true;
-            Time.timeScale = 0; // 時間停止
-            _canvas.SetActive(true);
-        }
-        else
-        {
-            isGameStop = false;
-            Time.timeScale = 1; // 再開
-            _canvas.SetActive(false);
-        }
+            if (!isGameStop)
+            {
+                isGameStop = true;
+                Time.timeScale = 0; // 時間停止
+                pauseImage.SetActive(true);
+            }
+            else
+            {
+                isGameStop = false;
+                Time.timeScale = 1; // 再開
+                pauseImage.SetActive(false);
+            }
+        }   
     }
     public void OnOffSwitchInstructions() // ゲーム説明のポップアップ制御
     {
-        if (!isImageActive)
+        if (tempImage != null)
         {
-            isImageActive = true;
-            _canvas.SetActive(true);
-        }
-        else
-        {
-            isImageActive = false;
-            _canvas.SetActive(false);
+            if (!isImageActive)
+            {
+                isImageActive = true;
+                tempImage.SetActive(true);
+            }
+            else
+            {
+                isImageActive = false;
+                tempImage.SetActive(false);
+            }
         }
     }
     public void ReturnToTitle()

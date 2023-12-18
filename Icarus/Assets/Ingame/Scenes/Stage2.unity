@@ -3422,6 +3422,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene: stage3
   loadToColor: {r: 1, g: 1, b: 1, a: 1}
+  pauseImage: {fileID: 543558149}
+  tempImage: {fileID: 0}
   _canvas: {fileID: 543558149}
 --- !u!4 &1904028337
 Transform:
