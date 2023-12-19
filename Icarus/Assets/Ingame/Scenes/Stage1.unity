@@ -765,6 +765,7 @@ MonoBehaviour:
   windForce: 50
   _forceX: 0
   _forceY: 1
+  windSeClip: {fileID: 0}
 --- !u!136 &439737475
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2060,7 +2061,6 @@ MonoBehaviour:
   loadToColor: {r: 1, g: 1, b: 1, a: 1}
   pauseImage: {fileID: 80364930}
   tempImage: {fileID: 0}
-  _canvas: {fileID: 80364930}
 --- !u!4 &1156117087
 Transform:
   m_ObjectHideFlags: 0
@@ -2175,6 +2175,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
+      propertyPath: bgmClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2012ad7024aea164981f99603a0aaf4a, type: 3}
+    - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
       propertyPath: confiner
       value: 
       objectReference: {fileID: 1380367243}
@@ -2183,9 +2187,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 626877152}
     - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
+      propertyPath: jumpSeClip
+      value: 
+      objectReference: {fileID: 8300000, guid: dff31413b1af2d44b97f35cd8204c2ea, type: 3}
+    - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
       propertyPath: _respawnPos
       value: 
       objectReference: {fileID: 1989280839}
+    - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
+      propertyPath: jetPackSeClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4960d5049b086f04386b35c5449319f7, type: 3}
     - target: {fileID: 2497084145693223108, guid: 0aa4a409147cc9c45b35629295e2517b, type: 3}
       propertyPath: _spriteRenderer
       value: 
@@ -2791,6 +2803,7 @@ MonoBehaviour:
   windForce: 50
   _forceX: 0
   _forceY: 1
+  windSeClip: {fileID: 0}
 --- !u!136 &1485460354
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3593,6 +3606,7 @@ MonoBehaviour:
   windForce: 50
   _forceX: 0
   _forceY: 1
+  windSeClip: {fileID: 0}
 --- !u!136 &2015782093
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4784,6 +4798,7 @@ MonoBehaviour:
   windForce: 50
   _forceX: 0
   _forceY: 1
+  windSeClip: {fileID: 0}
 --- !u!4 &2134198558
 Transform:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ public class PlayerController : SingletonBehavior<PlayerController>
     private bool _visible = false;
     public AudioClip jumpSeClip;
     public AudioClip jetPackSeClip;
-    public AudioClip bgmClip;
 
     void Start()
     {
@@ -58,9 +57,8 @@ public class PlayerController : SingletonBehavior<PlayerController>
         _hpSlider.value = 1;
         life = _maxHP;
         //TODO オーディオマネージャーの設定
-        // AudioManager.Instance.AddSEClip("JumpSe", jumpSeClip);
-        // AudioManager.Instance.AddSEClip("JetPackSe", jetPackSeClip);
-        // AudioManager.Instance.PlayBGM(bgmClip);
+        AudioManager.Instance.AddSEClip("JumpSe", jumpSeClip);
+        AudioManager.Instance.AddSEClip("JetPackSe", jetPackSeClip);
     }
     void Update()
     {
@@ -88,7 +86,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && _onGround && !_isJump)
         {
-            //AudioManager.Instance.PlaySE("JumpSe");
+            AudioManager.Instance.PlaySE("JumpSe");
             _isJump = true;
             _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
         }
@@ -105,7 +103,7 @@ public class PlayerController : SingletonBehavior<PlayerController>
         if (Input.GetKey(KeyCode.Space) && !_onGround && _tankCapacity > 0)
         {
             if (_isJump) { return; }
-            //AudioManager.Instance.PlaySE("JetPackSe");
+            AudioManager.Instance.PlaySE("JetPackSe");
             _tankCapacity -= Time.deltaTime;
             _rb.AddForce(transform.up * _jumpForce);
             _playerAnimator.SetBool("jetPack", true);
