@@ -19,15 +19,14 @@ public class GameManager : SingletonBehavior<GameManager>
     public Color loadToColor = Color.white;
     [NonSerialized]
     public bool isGameStop = false;
-    private GameObject pauseImage; // TODO ポーズ中表示されるオブジェクト　子に閉じる用ボタンもつける
+    [SerializeField]
+    private GameObject pauseImage;
+    [SerializeField]
     private GameObject tempImage;
     private bool isImageActive = false;
-    [Tooltip("表示したいキャンバス")]
-    [SerializeField]
-    private GameObject _canvas;
     void Start()
     {
-        pauseImage.SetActive(false);
+        //pauseImage.SetActive(false);
     }
     void Update()
     {
@@ -48,40 +47,48 @@ public class GameManager : SingletonBehavior<GameManager>
         //TODO 死亡SE
         Delay(2.0f);
     }
-    public void Respawn()
+    public void Respawn() // TODO あとから消す
     {
         isDeath = false;
     }
     public void OnOffSwitchPause() // ポーズ機能の制御
     {
-        if (!isGameStop)
+        if (pauseImage != null)
         {
-            isGameStop = true;
-            Time.timeScale = 0; // 時間停止
-            // TODO ポップアップアクティブ化
-        }
-        else
-        {
-            isGameStop = false;
-            Time.timeScale = 1; // 再開
-            // TODO ポップアップ非アクティブ化
-        }
+            if (!isGameStop)
+            {
+                isGameStop = true;
+                Time.timeScale = 0; // 時間停止
+                pauseImage.SetActive(true);
+            }
+            else
+            {
+                isGameStop = false;
+                Time.timeScale = 1; // 再開
+                pauseImage.SetActive(false);
+            }
+        }   
     }
     public void OnOffSwitchInstructions() // ゲーム説明のポップアップ制御
     {
-        if (!isImageActive)
+        if (tempImage != null)
         {
-            isImageActive = true;
-            // TODO ポップアップアクティブ化
-        }
-        else
-        {
-            isImageActive = false;
-            // TODO ポップアップ非アクティブ化
+            if (!isImageActive)
+            {
+                isImageActive = true;
+                tempImage.SetActive(true);
+            }
+            else
+            {
+                isImageActive = false;
+                tempImage.SetActive(false);
+            }
         }
     }
     public void ReturnToTitle()
     {
+        isGameStop = false;
+        Time.timeScale = 1; // 再開
         Initiate.Fade("Title", loadToColor, 1.0f);
     }
     public void ExitGame()
@@ -101,15 +108,7 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
     }
-    public void IndicationCanvas()
-    {
-        _canvas.SetActive(true);
-    }
-    public void HideCanvas()
-    {
-        _canvas.SetActive(false);
-    }
-    async void Delay(float waitTime)
+    public async void Delay(float waitTime)
     {
         var token = this.GetCancellationTokenOnDestroy();
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime),
